@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <!-- Bootstrap css-->
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+   
+   	<!--Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Propeller css -->
+    <link rel="stylesheet" href="/stylesheets/propeller.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body>
+    <div class="form-group pmd-textfield">
+      <label class="control-label">Mega Urls</label>
+      <textarea id="urls" required class="form-control"></textarea>
+    </div>
+    <button id="send" type="button" class="btn btn-default"> send </button >
+    <div class="form-group pmd-textfield">
+      <textarea id="crypt" required class="form-control"></textarea>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/javascripts/crypter.js"></script>
+    <script src="/javascripts/propeller.min.js"></script>
+  </body>
+</html>

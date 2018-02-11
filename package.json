@@ -1,0 +1,22 @@
+{
+  "name": "megacrypt.js",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "base64-url": "^2.1.0",
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "crypto-js": "^3.1.9-1",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "^4.15.5",
+    "megajs": "^0.13.2",
+    "morgan": "~1.9.0",
+    "opn": "^5.2.0",
+    "serve-favicon": "~2.4.5",
+    "standard": "^10.0.3"
+  }
+}
