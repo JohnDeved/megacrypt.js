@@ -3,6 +3,7 @@ const CryptoJS = require('crypto-js')
 const base64url = require('base64-url')
 const mega = require('megajs')
 const async = require('async')
+const bytes = require('bytes')
 
 class Megacrypt {
   constructor () {
@@ -18,6 +19,7 @@ class Megacrypt {
         file.loadAttributes((err, file) => {
           if (err) throw err
           response.name = file.name
+          response.size = bytes(file.size)
           callback([response])
         })
       } else if (/\/\/mega\.nz\/#F![\d\w]+![\d\w-]+/.test(url)) {
@@ -42,6 +44,7 @@ class Megacrypt {
               let response = {}
               response.link = `http://${host}/dl/!/${base64url.escape(crypt.toString())}/${base64url.escape(cryptKey)}`
               response.name = file.name
+              response.size = bytes(file.size)
               links.push(response)
             }
           }, console.log)

@@ -3,7 +3,7 @@ $('#send').click(function () {
     $.post('/api/encrypt', { url: el }, function (data) {
       console.log(data)
       data.forEach(el => {
-        $('#crypt').val($('#crypt').val() + '=== ' + el.name + ' ===' + String.fromCharCode('10') + el.link + String.fromCharCode('10'))
+        $('#crypt').val($('#crypt').val() + el.name + ' [' + el.size + ']' + String.fromCharCode('10') + el.link + String.fromCharCode('10') + String.fromCharCode('10'))
       })
     })
   })

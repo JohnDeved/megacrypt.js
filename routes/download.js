@@ -4,7 +4,6 @@ const router = express.Router()
 const megacrypt = require('../modules/megacrypt.js')
 
 router.get('/:type/:crypt/:key', function (req, res, next) {
-  console.log(req.params)
   let decrypt = megacrypt.decryptUrl(req.params.crypt, req.params.key, req.params.type)
 
   if (req.params.type === '_') {
