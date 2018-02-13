@@ -4,16 +4,20 @@ const base64url = require('base64-url')
 const mega = require('megajs')
 const async = require('async')
 const bytes = require('bytes')
+const config = require('../config')
 
 class Megacrypt {
   constructor () {
+    this.encryptServer = str => CryptoJS.AES.encrypt(str, config.serverKey).toString()
+    this.decryptServer = str => CryptoJS.AES.decrypt(str, config.serverKey).toString(CryptoJS.enc.Utf8)
     this.encryptUrl = (url, host, callback) => {
       if (/\/\/mega\.nz\/#![\d\w]+![\d\w-]+/.test(url)) {
+        let response = {}
         let [, fileId, fileKey] = url.split('!')
         let cryptKey = crypto.randomBytes(32).toString('base64')
-        let crypt = CryptoJS.AES.encrypt(`${fileId}!${fileKey}`, cryptKey)
-        let response = {}
-        response.link = `http://${host}/dl/_/${base64url.escape(crypt.toString())}/${base64url.escape(cryptKey)}`
+        let crypt = CryptoJS.AES.encrypt(`${fileId}!${fileKey}`, cryptKey).toString()
+        let link = this.encryptServer(`${crypt}!${cryptKey}`)
+        response.link = `http://${host}/dl/_/${base64url.escape(link)}`
 
         let file = new mega.File({downloadId: fileId, key: fileKey, directory: false})
         file.loadAttributes((err, file) => {
@@ -29,20 +33,15 @@ class Megacrypt {
           if (err) throw err
           let links = []
           let files = []
-          let pushFiles = file => {
-            if (!file.directory) {
-              files.push(file)
-            } else {
-              async.each(file.children, pushFiles, console.log)
-            }
-          }
+          let pushFiles = file => file.directory ? async.each(file.children, pushFiles, console.log) : files.push(file)
           async.each(folder.children, pushFiles, console.log)
           async.each(files, file => {
             if (!file.directory) {
-              let cryptKey = crypto.randomBytes(32).toString('base64')
-              let crypt = CryptoJS.AES.encrypt(`${file.downloadId}!${downloadId}!${fileKey}`, cryptKey)
               let response = {}
-              response.link = `http://${host}/dl/!/${base64url.escape(crypt.toString())}/${base64url.escape(cryptKey)}`
+              let cryptKey = crypto.randomBytes(32).toString('base64')
+              let crypt = CryptoJS.AES.encrypt(`${file.downloadId}!${downloadId}!${fileKey}`, cryptKey).toString()
+              let link = this.encryptServer(`${crypt}!${cryptKey}`)
+              response.link = `http://${host}/dl/!/${base64url.escape(link)}`
               response.name = file.name
               response.size = bytes(file.size)
               links.push(response)
@@ -52,12 +51,14 @@ class Megacrypt {
         })
       }
     }
-    this.decryptUrl = (crypt, key, type) => {
+    this.decryptUrl = (crypt, type) => {
       if (type === '_') {
-        let [fileId, fileKey] = CryptoJS.AES.decrypt(base64url.unescape(crypt), base64url.unescape(key)).toString(CryptoJS.enc.Utf8).split('!')
+        let [decrypt, key] = this.decryptServer(base64url.unescape(crypt)).split('!')
+        let [fileId, fileKey] = CryptoJS.AES.decrypt(decrypt, key).toString(CryptoJS.enc.Utf8).split('!')
         return {fileId: fileId, fileKey: fileKey}
       } else if (type === '!') {
-        let [fileId, folderId, fileKey] = CryptoJS.AES.decrypt(base64url.unescape(crypt), base64url.unescape(key))
+        let [decrypt, key] = this.decryptServer(base64url.unescape(crypt)).split('!')
+        let [fileId, folderId, fileKey] = CryptoJS.AES.decrypt(base64url.unescape(decrypt), base64url.unescape(key))
         .toString(CryptoJS.enc.Utf8).split('!')
         return {fileId: fileId, folderId: folderId, fileKey: fileKey}
       }

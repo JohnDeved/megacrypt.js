@@ -4,8 +4,8 @@ const router = express.Router()
 const megacrypt = require('../modules/megacrypt.js')
 const config = require('../config')
 
-router.get('/:type/:crypt/:key', function (req, res, next) {
-  let decrypt = megacrypt.decryptUrl(req.params.crypt, req.params.key, req.params.type)
+router.get('/:type/:crypt', function (req, res, next) {
+  let decrypt = megacrypt.decryptUrl(req.params.crypt, req.params.type)
 
   if (req.params.type === '_') {
     let file = new mega.File({downloadId: decrypt.fileId, key: decrypt.fileKey, directory: false})
