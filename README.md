@@ -29,5 +29,5 @@ You can download MegaCrypt.js files however you want! Trough your favourite Brow
 - [int] __port__: the port megacrypt.js will be running on
 - [str] __serverKey__: Private Server Key (should be changed)
 - [bool] __encryptionTool__: if true, the link encryption tool will on the base url
-- [bool] __encrytionApi__: if true, the link encryption api will be enabled (nedded for the encryption tool)
+- [bool] __encrytionApi__: if true, the link encryption api will be enabled (needed for the encryption tool)
 - [bool] __returnCiphertext__: if true, the site will pipe the requested files without decryption them
