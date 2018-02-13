@@ -1,6 +1,6 @@
 # Url Decryption Example:
 
-![MegaCrypt Url Decryption Example](https://i.imgur.com/TjbPUcM.png)
+![MegaCrypt Url Decryption Example](https://i.imgur.com/yR0EE1P.png)
 
 # Server Setup Guide:
 
