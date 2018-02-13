@@ -4,11 +4,12 @@
  * Module dependencies.
  */
 
-var app = require('../app')
-var debug = require('debug')('megacrypt.js:server')
-var http = require('http')
+const app = require('../app')
+const debug = require('debug')('megacrypt.js:server')
+const http = require('http')
+const config = require('../config')
 
-var port = normalizePort('3427')
+var port = normalizePort(config.port || '3427')
 app.set('port', port)
 
 /**
@@ -63,11 +64,9 @@ function onError (error) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges')
       process.exit(1)
-      break
     case 'EADDRINUSE':
       console.error(bind + ' is already in use')
       process.exit(1)
-      break
     default:
       throw error
   }

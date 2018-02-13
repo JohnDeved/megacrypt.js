@@ -2,6 +2,7 @@ const express = require('express')
 const mega = require('megajs')
 const router = express.Router()
 const megacrypt = require('../modules/megacrypt.js')
+const config = require('../config')
 
 router.get('/:type/:crypt/:key', function (req, res, next) {
   let decrypt = megacrypt.decryptUrl(req.params.crypt, req.params.key, req.params.type)
@@ -12,7 +13,7 @@ router.get('/:type/:crypt/:key', function (req, res, next) {
       if (err) throw err
       res.setHeader('Content-Length', file.size)
       res.setHeader('Content-Disposition', `attachment; filename="${file.name}"`)
-      file.download(/*{returnCiphertext: true}*/).pipe(res)
+      file.download({returnCiphertext: config.returnCiphertext}).pipe(res)
     })
   } else if (req.params.type === '!') {
     let folder = new mega.File({downloadId: decrypt.folderId, key: decrypt.fileKey, directory: true})
@@ -21,7 +22,7 @@ router.get('/:type/:crypt/:key', function (req, res, next) {
       let downloadFile = file => {
         res.setHeader('Content-Length', file.size)
         res.setHeader('Content-Disposition', `attachment; filename="${file.name}"`)
-        file.download(/*{returnCiphertext: true}*/).pipe(res)
+        file.download({returnCiphertext: config.returnCiphertext}).pipe(res)
       }
       let findFile = file => {
         if (!file.directory) {
