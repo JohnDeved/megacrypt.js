@@ -9,7 +9,6 @@ router.get('/:type/:crypt/:key', function (req, res, next) {
 
   if (req.params.type === '_') {
     let file = new mega.File({downloadId: decrypt.fileId, key: decrypt.fileKey, directory: false})
-
     file.loadAttributes((err, file) => {
       if (err) throw err
       res.setHeader('Content-Length', file.size)
@@ -17,14 +16,24 @@ router.get('/:type/:crypt/:key', function (req, res, next) {
       file.download(/*{returnCiphertext: true}*/).pipe(res)
     })
   } else if (req.params.type === '!') {
-    let file = new mega.File({downloadId: decrypt.folderId, key: decrypt.fileKey, directory: true})
-
-    file.loadAttributes((err, file) => {
+    let folder = new mega.File({downloadId: decrypt.folderId, key: decrypt.fileKey, directory: true})
+    folder.loadAttributes((err, folder) => {
       if (err) throw err
-      file = file.children.filter(f => f.downloadId.toString() === decrypt.fileId).shift()
-      res.setHeader('Content-Length', file.size)
-      res.setHeader('Content-Disposition', `attachment; filename="${file.name}"`)
-      file.download(/*{returnCiphertext: true}*/).pipe(res)
+      let downloadFile = file => {
+        res.setHeader('Content-Length', file.size)
+        res.setHeader('Content-Disposition', `attachment; filename="${file.name}"`)
+        file.download(/*{returnCiphertext: true}*/).pipe(res)
+      }
+      let findFile = file => {
+        if (!file.directory) {
+          if (file.downloadId.toString() === decrypt.fileId) {
+            return downloadFile(file)
+          }
+        } else {
+          file.children.forEach(findFile)
+        }
+      }
+      folder.children.forEach(findFile)
     })
   }
 })
