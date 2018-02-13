@@ -1,7 +1,10 @@
 $('#send').click(function () {
   $('#urls').val().split(String.fromCharCode('10')).forEach(el => {
     $.post('/api/encrypt', { url: el }, function (data) {
-      $('#crypt').val($('#crypt').val() + data.link + String.fromCharCode('10'))
+      console.log(data)
+      data.forEach(el => {
+        $('#crypt').val($('#crypt').val() + '=== ' + el.name + ' ===' + String.fromCharCode('10') + el.link + String.fromCharCode('10'))
+      })
     })
   })
 })
