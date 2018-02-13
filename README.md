@@ -2,11 +2,15 @@
 
 #### Sick of getting your Mega.nz Files Reported?
 
-MegaCrypt.js lets you share your Mega.nz files without actually having to share any Mega.nz links. By encrypting your links, MegaCrypt will create a secure proxy to your files.
+MegaCrypt.js lets you share your Mega.nz files without actually having to share any Mega.nz links. By encrypting your links MegaCrypt will create a secure proxy to your files.
 
 #### Sick of running out of Mega.nz Bandwidth?
 
 Any files downloaded trought MegaCrypt.js wont affect your accounts Bandwidth, promised! Now you can download as many files as you want!
+
+#### Sick of having to use Stupit File Download tools?
+
+You can download MegaCrypt.js files however you want! Trough your favourite Browser, jDwonloader, Free Download Manager, wget... MegaCrypt.js will never force you to use any tools that you dont want to use!
 
 ## Url Decryption Example:
 
