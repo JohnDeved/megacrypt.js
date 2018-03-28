@@ -17,7 +17,7 @@ class Megacrypt {
         let cryptKey = crypto.randomBytes(32).toString('base64')
         let crypt = CryptoJS.AES.encrypt(`${fileId}!${fileKey}`, cryptKey).toString()
         let link = this.encryptServer(`${crypt}!${cryptKey}`)
-        response.link = `http://${host}/dl/_/${base64url.escape(link)}`
+        response.link = `http://${host}:${config.port}/dl/_/${base64url.escape(link)}`
 
         let file = new mega.File({downloadId: fileId, key: fileKey, directory: false})
         file.loadAttributes((err, file) => {
@@ -41,7 +41,7 @@ class Megacrypt {
               let cryptKey = crypto.randomBytes(32).toString('base64')
               let crypt = CryptoJS.AES.encrypt(`${file.downloadId}!${downloadId}!${fileKey}`, cryptKey).toString()
               let link = this.encryptServer(`${crypt}!${cryptKey}`)
-              response.link = `http://${host}/dl/!/${base64url.escape(link)}`
+              response.link = `http://${host}:${config.port}/dl/!/${base64url.escape(link)}`
               response.name = file.name
               response.size = bytes(file.size)
               links.push(response)
