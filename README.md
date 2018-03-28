@@ -13,6 +13,7 @@ Any files downloaded trought MegaCrypt.js wont affect your accounts Bandwidth, p
 You can download MegaCrypt.js files however you want! Trough your favourite Browser, jDownloader, Free Download Manager, wget... MegaCrypt.js will never force you to use any tools that you dont want to use! Allways download your file at the highest speed!
 
 ![](https://i.gyazo.com/66a04828366a94e951100f9404c24160.gif)
+![](https://i.imgur.com/0hVwV0z.png)
 
 ## Url Decryption Example:
 
