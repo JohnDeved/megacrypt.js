@@ -26,7 +26,7 @@ You can download MegaCrypt.js files however you want! Trough your favourite Brow
 3. start Server: `npm start`
 
 ## Config Guide:
-
+- [str] __host__: the host megacrypt.js will be running on
 - [int] __port__: the port megacrypt.js will be running on
 - [str] __serverKey__: Private Server Key (should be changed)
 - [bool] __encryptionTool__: if true, the link encryption tool will on the base url
