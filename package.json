@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "async": "^2.6.0",
@@ -20,6 +22,8 @@
     "morgan": "~1.9.0",
     "opn": "^5.2.0",
     "serve-favicon": "~2.4.5",
-    "standard": "^11.0.0"
-  }
+    "standard": "^11.0.0",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
