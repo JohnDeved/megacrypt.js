@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "async": "^2.6.0",
+    "async": "^3.2.2",
     "base64-url": "^2.1.0",
     "body-parser": "~1.18.2",
     "bytes": "^3.0.0",
